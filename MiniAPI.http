@@ -1,0 +1,61 @@
+@MiniAPI_HostAddress = https://localhost:7216
+
+GET {{MiniAPI_HostAddress}}/products
+Accept: application/json
+
+###GET Product by ID
+
+GET {{MiniAPI_HostAddress}}/products/3
+Accept: application/json
+
+### Get Product by invalid ID
+GET {{MiniAPI_HostAddress}}/products/346
+
+### POST Create a new Product
+# POST {{MiniAPI_HostAddress}}/products
+# Content-Type: application/json
+# {
+#     "name": "Keyboard",
+#     "price": 19.99,
+#     "stock": 100
+}
+
+### PUT Update an existing Product
+PUT {{MiniAPI_HostAddress}}/products/6
+Content-Type: application/json
+{
+    "name": "Case",
+    "price": 29.99,
+    "stock": 150
+}
+### DELETE Remove a Product
+DELETE {{MiniAPI_HostAddress}}/products/2
+
+### DELETE Remove a invalid Product
+DELETE {{MiniAPI_HostAddress}}/products/659425
+
+
+### GET All Products after Deletion
+GET {{MiniAPI_HostAddress}}/products
+Accept: application/json
+
+### POST Create Batched Products
+POST {{MiniAPI_HostAddress}}/products/batch
+Content-Type: application/json
+[
+    {
+        "name": "Webcam",
+        "price": 49.99,
+        "stock": 75
+    },
+    {
+        "name": "Headphones",
+        "price": 89.99,
+        "stock": 50
+    },
+    {
+        "name": "Microphone",
+        "price": 129.99,
+        "stock": 30
+    }
+]
