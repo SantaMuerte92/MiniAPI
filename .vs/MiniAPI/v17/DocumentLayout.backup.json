@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\FIA\\Projekte\\MiniAPI\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{22A05CC9-3D37-4D5A-8D96-9C8D78122B36}|MiniAPI.csproj|c:\\users\\fia\\projekte\\miniapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{22A05CC9-3D37-4D5A-8D96-9C8D78122B36}|MiniAPI.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{22A05CC9-3D37-4D5A-8D96-9C8D78122B36}|MiniAPI.csproj|c:\\users\\fia\\projekte\\miniapi\\miniapi.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}",
       "RelativeMoniker": "D:0:0:{22A05CC9-3D37-4D5A-8D96-9C8D78122B36}|MiniAPI.csproj|solutionrelative:miniapi.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{22A05CC9-3D37-4D5A-8D96-9C8D78122B36}|MiniAPI.csproj|c:\\users\\fia\\projekte\\miniapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{22A05CC9-3D37-4D5A-8D96-9C8D78122B36}|MiniAPI.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,7 +18,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -34,25 +34,26 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "MiniAPI.http",
               "DocumentMoniker": "C:\\Users\\FIA\\Projekte\\MiniAPI\\MiniAPI.http",
               "RelativeDocumentMoniker": "MiniAPI.http",
-              "ToolTip": "C:\\Users\\FIA\\Projekte\\MiniAPI\\MiniAPI.http",
-              "RelativeToolTip": "MiniAPI.http",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\FIA\\Projekte\\MiniAPI\\MiniAPI.http*",
+              "RelativeToolTip": "MiniAPI.http*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAB0AQAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
-              "WhenOpened": "2025-12-02T14:11:12.654Z"
+              "WhenOpened": "2025-12-02T14:11:12.654Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\FIA\\Projekte\\MiniAPI\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "C:\\Users\\FIA\\Projekte\\MiniAPI\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAQAAAAAAAAAAAAAAB4AAAAmAAAAAAAAAA==",
+              "ViewState": "AgIAAHMAAAAAAAAAAAAgwIsAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-02T12:24:49.933Z",
               "EditorCaption": ""

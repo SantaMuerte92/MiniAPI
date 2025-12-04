@@ -27,3 +27,13 @@ C:\Users\FIA\Projekte\MiniAPI\obj\Debug\net9.0\refint\MiniAPI.dll
 C:\Users\FIA\Projekte\MiniAPI\obj\Debug\net9.0\MiniAPI.pdb
 C:\Users\FIA\Projekte\MiniAPI\obj\Debug\net9.0\MiniAPI.genruntimeconfig.cache
 C:\Users\FIA\Projekte\MiniAPI\obj\Debug\net9.0\ref\MiniAPI.dll
+C:\Users\FIA\Projekte\MiniAPI\bin\Debug\net9.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\FIA\Projekte\MiniAPI\bin\Debug\net9.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\FIA\Projekte\MiniAPI\bin\Debug\net9.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\FIA\Projekte\MiniAPI\bin\Debug\net9.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\FIA\Projekte\MiniAPI\bin\Debug\net9.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\FIA\Projekte\MiniAPI\bin\Debug\net9.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\FIA\Projekte\MiniAPI\bin\Debug\net9.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\FIA\Projekte\MiniAPI\bin\Debug\net9.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\FIA\Projekte\MiniAPI\obj\Debug\net9.0\MiniAPI.csproj.AssemblyReference.cache
+C:\Users\FIA\Projekte\MiniAPI\obj\Debug\net9.0\MiniAPI.csproj.Up2Date

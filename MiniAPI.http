@@ -1,4 +1,6 @@
 @MiniAPI_HostAddress = https://localhost:7216
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidXNlciIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IlVzZXIiLCJGSUEiOiI0NiIsImV4cCI6MTc2NDg0NjMwMywiaXNzIjoiTWVpbkFwaVNlcnZlciIsImF1ZCI6Ik1laW5BcGlDbGllbnQifQ.lpyySFIU_OszWdPcoiaV6ptbxHK9nXsxdypJmaOk-fE
+
 
 GET {{MiniAPI_HostAddress}}/products
 Accept: application/json
@@ -8,7 +10,18 @@ Accept: application/json
 GET {{MiniAPI_HostAddress}}/products/3?Key=test1234
 Accept: application/json
 
+###GET Privat
+GET {{MiniAPI_HostAddress}}/privat
+Accept: application/json
+Authorization: Bearer {{token}}
 
+### LOGIN
+POST {{MiniAPI_HostAddress}}/login
+Content-Type: application/json
+{
+    "username": "user",
+    "password": "password"
+}
 ### Get Product by invalid ID
 GET {{MiniAPI_HostAddress}}/products/346
 

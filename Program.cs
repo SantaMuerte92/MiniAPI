@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Security.Cryptography;
 
 namespace MiniAPI
 {
@@ -12,60 +14,71 @@ namespace MiniAPI
 
             builder.Services.AddEndpointsApiExplorer();
 
-            var app = builder.Build();
-
-            //JWT Konfiguration 
-            // Geheimer Schlüssel für die JWT-Signierung
-            var secretKey= "supergeheimer!Schluessel12345"; // Sollte lang und komplex sein
-
-            //Symetrische Sicherheitschlüssel erstellen
+            var secretKey = "supergeheimer!Schluessel12345_superlang";
             var seckey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(secretKey));
 
-            //Authentifizierungsdienste hinzufügen
-            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options=>
+            builder.Services
+                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
                 {
-                    //Token-Validierungsparameter konfigurieren
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
-                        //Aussteller validieren
                         ValidateIssuer = false,
-                        //Zielgruppen validieren
                         ValidateAudience = false,
-                        //Gültigkeitsdauer validieren
                         ValidateLifetime = true,
-                        //Signaturschlüssel validieren
                         ValidateIssuerSigningKey = true,
-                        //Signaturschlüssel festlegen
+                        ValidIssuer = "MeinApiServer",
+                        ValidAudience = "MeinApiClient",
                         IssuerSigningKey = seckey
                     };
                 });
 
+            builder.Services.AddAuthorization();
 
+            var app = builder.Build();
 
-            builder.Services.AddEndpointsApiExplorer();
-
-
-
-
-                            //In-Memory-Datenbank (Liste von Produkten)
-                            var products = new List<Product>
+            var products = new List<Product>
             {
                 new Product(1, "Laptop", 999.99m, 10),
                 new Product(2, "Smartphone", 499.99m, 25),
                 new Product(3, "Tablet", 299.99m, 15),
                 new Product(4, "Monitor", 199.99m, 8)
-            
             };
 
             int nextPID = 5;
             string apiKey = "test1234";
 
+            app.UseAuthentication();
+            app.UseAuthorization();
 
-            //Get /products - Alle Produkte abrufen
+            app.MapPost("/login", (LoginRequest req) =>
+            {
+                if (req.Username == "user" && req.Password == "password")
+                {
+                    var claims = new[]
+                    {
+                        new Claim(ClaimTypes.Name, req.Username),
+                        new Claim(ClaimTypes.Role, "User"),
+                        new Claim("FIA", "46")
+                    };
+
+                    var credentials = new SigningCredentials(seckey, SecurityAlgorithms.HmacSha256);
+                    var token = new JwtSecurityToken(
+                        issuer: "MeinApiServer",
+                        audience: "MeinApiClient",
+                        claims: claims,
+                        expires: DateTime.Now.AddMinutes(60),
+                        signingCredentials: credentials);
+
+                    var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+                    return Results.Ok(new { token = tokenString });
+                }
+
+                return Results.Unauthorized();
+            });
+
             app.MapGet("/products", () => Results.Ok(products));
 
-            //Get /products/{id} - Produkt nach ID abrufen
             app.MapGet("/products/{id}", (int id, string Key) =>
             {
                 if (Key == apiKey)
@@ -73,21 +86,20 @@ namespace MiniAPI
                     var product = products.FirstOrDefault(p => p.PID == id);
                     return product is not null ? Results.Ok(product) : Results.NotFound();
                 }
-                else { 
+                else
+                {
                     return Results.Unauthorized();
                 }
             });
 
-            //Post /products - Neues Produkt erstellen
             app.MapPost("/products", (Product newProduct) =>
             {
-                var product = newProduct with {PID = nextPID };
+                var product = newProduct with { PID = nextPID };
                 products.Add(product);
                 nextPID++;
                 return Results.Created($"/products/{product.PID}", product);
             });
 
-            //Post /products/batch - Mehrere Produkte erstellen
             app.MapPost("/products/batch", (List<Product> newProducts) =>
             {
                 var createdProducts = new List<Product>();
@@ -101,7 +113,6 @@ namespace MiniAPI
                 return Results.Created("/products/batch", createdProducts);
             });
 
-            //PUT /products/ID - Produkt aktualisieren
             app.MapPut("/products/{id}", (int id, Product updatedProduct) =>
             {
                 var index = products.FindIndex(p => p.PID == id);
@@ -114,7 +125,6 @@ namespace MiniAPI
                 return Results.Ok(product);
             });
 
-            //DELETE /products/ID - Produkt löschen
             app.MapDelete("/products/{id}", (int id) =>
             {
                 var index = products.FindIndex(p => p.PID == id);
@@ -126,6 +136,8 @@ namespace MiniAPI
                 return Results.NoContent();
             });
 
+            app.MapGet("/privat" , () => Results.Ok("Geheimer Inhalt nur für Authentifizierte!"))
+               .RequireAuthorization();
 
 
 
@@ -135,8 +147,7 @@ namespace MiniAPI
             app.Run();
         }
 
+        public record LoginRequest(string Username, string Password);
         record Product(int PID, string Name, decimal Price, int Stock);
-
-
     }
 }
