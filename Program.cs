@@ -1,3 +1,7 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+
 namespace MiniAPI
 {
     public class Program
@@ -10,8 +14,42 @@ namespace MiniAPI
 
             var app = builder.Build();
 
-            //In-Memory-Datenbank (Liste von Produkten)
-            var products = new List<Product>
+            //JWT Konfiguration 
+            // Geheimer Schlüssel für die JWT-Signierung
+            var secretKey= "supergeheimer!Schluessel12345"; // Sollte lang und komplex sein
+
+            //Symetrische Sicherheitschlüssel erstellen
+            var seckey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(secretKey));
+
+            //Authentifizierungsdienste hinzufügen
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options=>
+                {
+                    //Token-Validierungsparameter konfigurieren
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        //Aussteller validieren
+                        ValidateIssuer = false,
+                        //Zielgruppen validieren
+                        ValidateAudience = false,
+                        //Gültigkeitsdauer validieren
+                        ValidateLifetime = true,
+                        //Signaturschlüssel validieren
+                        ValidateIssuerSigningKey = true,
+                        //Signaturschlüssel festlegen
+                        IssuerSigningKey = seckey
+                    };
+                });
+
+
+
+            builder.Services.AddEndpointsApiExplorer();
+
+
+
+
+                            //In-Memory-Datenbank (Liste von Produkten)
+                            var products = new List<Product>
             {
                 new Product(1, "Laptop", 999.99m, 10),
                 new Product(2, "Smartphone", 499.99m, 25),
@@ -21,16 +59,23 @@ namespace MiniAPI
             };
 
             int nextPID = 5;
+            string apiKey = "test1234";
 
 
             //Get /products - Alle Produkte abrufen
             app.MapGet("/products", () => Results.Ok(products));
 
             //Get /products/{id} - Produkt nach ID abrufen
-            app.MapGet("/products/{id}", (int id) =>
+            app.MapGet("/products/{id}", (int id, string Key) =>
             {
-                var product = products.FirstOrDefault(p => p.PID == id);
-                return product is not null ? Results.Ok(product) : Results.NotFound();
+                if (Key == apiKey)
+                {
+                    var product = products.FirstOrDefault(p => p.PID == id);
+                    return product is not null ? Results.Ok(product) : Results.NotFound();
+                }
+                else { 
+                    return Results.Unauthorized();
+                }
             });
 
             //Post /products - Neues Produkt erstellen

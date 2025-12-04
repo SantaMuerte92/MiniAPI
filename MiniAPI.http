@@ -5,19 +5,20 @@ Accept: application/json
 
 ###GET Product by ID
 
-GET {{MiniAPI_HostAddress}}/products/3
+GET {{MiniAPI_HostAddress}}/products/3?Key=test1234
 Accept: application/json
+
 
 ### Get Product by invalid ID
 GET {{MiniAPI_HostAddress}}/products/346
 
 ### POST Create a new Product
-# POST {{MiniAPI_HostAddress}}/products
-# Content-Type: application/json
-# {
-#     "name": "Keyboard",
-#     "price": 19.99,
-#     "stock": 100
+POST {{MiniAPI_HostAddress}}/products
+Content-Type: application/json
+{
+    "name": "Keyboard",
+    "price": 19.99,
+    "stock": 100
 }
 
 ### PUT Update an existing Product
